@@ -1,11 +1,23 @@
 # 댓글이 있는 익명 게시판 구현
-댓글이 있는 익명 게시판을 구현한 프로젝트입니다.
-
+안녕하세요, 박준희 입니다.\
+댓글이 있는 익명 게시판을 구현한 프로젝트입니다. \
+게시판 프로젝트는 RESTful API 환경을 지원하며, 크게 게시글 API와 댓글 API로 구성되어 있습니다.\
+프로젝트를 열람해 주셔서 감사합니다.
 ## Install
     npm install
 
 ## Run
     node app.js
+
+## Dev environments
+
+NodeJS v14.17.0 LTS \
+Maria DB v10.4 \
+vscode, DBeaver, Mysql workbench
+
+## Database schema
+게시글 테이블과 댓글 테이블 \
+![screensh](./img/databaseschema.png)
 
 # REST API
 게시판 프로젝트의 REST API 예제를 설명합니다.
@@ -262,30 +274,30 @@
     ETag: W/"159-IEhRdQRQXBIH+SEZuqbQ6aRe9xY"
     Date: Fri, 04 Jun 2021 06:09:23 GMT
     Connection: keep-alive
-[
-    {
-        "id": 1,
-        "comment_content": "반갑습니다",
-        "author": "wontedlab",
-        "created_at": "2021-06-04 06:00:12",
-        "child_comments": [
-            {
-                "id": 5,
-                "comment_content": "어서오세요",
-                "author": "leader",
-                "created_at": "2021-06-04 06:07:20",
-                "parent_id": 1
-            },
-            {
-                "id": 6,
-                "comment_content": "어서오세요",
-                "author": "leader",
-                "created_at": "2021-06-04 06:07:35",
-                "parent_id": 1
-            }
-        ]
-    }
-]
+    [
+        {
+            "id": 1,
+            "comment_content": "반갑습니다",
+            "author": "wontedlab",
+            "created_at": "2021-06-04 06:00:12",
+            "child_comments": [
+                {
+                    "id": 5,
+                    "comment_content": "어서오세요",
+                    "author": "leader",
+                    "created_at": "2021-06-04 06:07:20",
+                    "parent_id": 1
+                },
+                {
+                    "id": 6,
+                    "comment_content": "어서오세요",
+                    "author": "leader",
+                    "created_at": "2021-06-04 06:07:35",
+                    "parent_id": 1
+                }
+            ]
+        }
+    ]
 ### 댓글 작성 성공
 #### Requset
     curl -i --request POST 'localhost:8000/v1/post/1/comment' \
@@ -329,6 +341,7 @@
         "message":"Not found post by post id, post id: 99."
     }
 ### 대댓글 작성 성공
+대댓글 작성 기능은 comment 자원 뒤에 부모 댓글의 id를 추가하여 요청합니다.
 #### Requset
     curl -i --request POST 'localhost:8000/v1/post/1/comment/1' \
     --header 'Content-Type: application/json' \
