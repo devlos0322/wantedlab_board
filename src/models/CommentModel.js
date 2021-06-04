@@ -78,9 +78,9 @@ class Comment {
             //게시글 존재 확인
             let res = await conn.query(`
                 SELECT id
-                FROM comment_tb
-                WHERE post_id = ?
-            `, [post_id]);
+                FROM post_tb
+                WHERE id = ?
+            `, post_id);
             if(!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found_post_id"}, null]);
@@ -90,7 +90,7 @@ class Comment {
                 SELECT id
                 FROM comment_tb
                 WHERE post_id = ?
-                  AND parent_id = ?
+                  AND id = ?
                 `, [post_id, parent_id]);
             if(!res.length) {
                 if (conn) conn.release();
