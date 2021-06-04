@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 const { map } = require("../../app");
 const db = require("../utils/db");
 
@@ -16,7 +16,7 @@ class Comment {
                  FROM post_tb
                 WHERE id = ?
             `, [post_id]);
-            if(!res.length) {
+            if (!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found"}, null]);
             } 
@@ -26,7 +26,7 @@ class Comment {
                 VALUES (?, ?, ?, 1, CURRENT_TIMESTAMP);
                 `, [post_id, comment_content, author]);
             if (conn) conn.release();
-            if(res.affectedRows) resolve([null, {id: res.insertId}]);
+            if (res.affectedRows) resolve([null, {id: res.insertId}]);
             resolve([{message: "create error"}, null]);
         });
     }
@@ -47,7 +47,7 @@ class Comment {
                 let last_parent_idx;
                 //하위 댓글 은 부모 댓글의 child_comments 필드에 추가하여 응답
                 res.map((tuple, tuple_idx) => {
-                    if(tuple.depth === 1) {
+                    if (tuple.depth === 1) {
                         result.push({
                             id : tuple.id,
                             comment_content : tuple.comment_content,
@@ -66,7 +66,7 @@ class Comment {
                         });
                     }
                 });
-                if(res.length) resolve([null, result]);
+                if (res.length) resolve([null, result]);
             }
             resolve([{message: "not_found"}, null]);
         });
@@ -81,7 +81,7 @@ class Comment {
                 FROM post_tb
                 WHERE id = ?
             `, post_id);
-            if(!res.length) {
+            if (!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found_post_id"}, null]);
             } 
@@ -92,7 +92,7 @@ class Comment {
                 WHERE post_id = ?
                   AND id = ?
                 `, [post_id, parent_id]);
-            if(!res.length) {
+            if (!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found_parent_id"}, null]);
             } 
@@ -102,7 +102,7 @@ class Comment {
                 VALUES (?, ?, ?, ?, 2, CURRENT_TIMESTAMP);
                 `, [post_id, comment_content, author, parent_id]);
             if (conn) conn.release();
-            if(res.affectedRows) resolve([null, {id: res.insertId}]);
+            if (res.affectedRows) resolve([null, {id: res.insertId}]);
             resolve([{message: "create_error"}, null]);
         });
     }

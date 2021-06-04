@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 const db = require("../utils/db");
 
 class Post {
@@ -14,7 +14,7 @@ class Post {
                 VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
                 `, [title, content, author, password]);
             if (conn) conn.release();
-            if(res.affectedRows) resolve([null, {id: res.insertId}]);
+            if (res.affectedRows) resolve([null, {id: res.insertId}]);
             resolve([{message: "create_error"}, null]);
         });
     }
@@ -29,7 +29,7 @@ class Post {
                  LIMIT ?, ?;
                 `, [parseInt(page)-1, parseInt(page_size)]);
             if (conn) conn.release();
-            if(res.length) resolve([null, res]);
+            if (res.length) resolve([null, res]);
             resolve([{message: "not_found"}, null]);
         });
     }
@@ -43,7 +43,7 @@ class Post {
                  WHERE id = ?;
             `, id);
             if (conn) conn.release();
-            if(res.length) resolve([null, res[0]]);
+            if (res.length) resolve([null, res[0]]);
             resolve([{message: "not_found"}, null]);
         });
     }
@@ -59,7 +59,7 @@ class Post {
                  LIMIT ?, ?;
             `, [title, parseInt(page)-1, parseInt(page_size)]);
             if (conn) conn.release();
-            if(res.length) resolve([null, res]);
+            if (res.length) resolve([null, res]);
             resolve([{message: "not_found"}, null]);
         });
     }
@@ -75,7 +75,7 @@ class Post {
                  LIMIT ?, ?;
             `, [author, parseInt(page)-1, parseInt(page_size)]);
             if (conn) conn.release();
-            if(res.length) resolve([null, res]);
+            if (res.length) resolve([null, res]);
             resolve([{message: "not_found"}, null]);
         });
     }
@@ -89,7 +89,7 @@ class Post {
                 FROM post_tb
                 WHERE id = ?
             `, id);
-            if(!res.length) {
+            if (!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found"}, null]);
             } 
@@ -102,7 +102,7 @@ class Post {
                    AND password = ?;
             `, [title, content, id, password]);
             if (conn) conn.release();
-            if(res.affectedRows) {
+            if (res.affectedRows) {
                 //정상 수정
                 resolve([null, {id: id}]);
             } else {
@@ -121,7 +121,7 @@ class Post {
                 FROM post_tb
                 WHERE id = ?
             `, id);
-            if(!res.length) {
+            if (!res.length) {
                 if (conn) conn.release();
                 return resolve([{message: "not_found"}, null]);
             } 
@@ -131,7 +131,7 @@ class Post {
                    AND password = ?;
             `, [id, password]);
             if (conn) conn.release();
-            if(res.affectedRows) {
+            if (res.affectedRows) {
                 //정상 삭제
                 resolve([null, {id: id}]);
             } else {
