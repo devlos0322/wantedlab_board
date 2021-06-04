@@ -1,0 +1,25 @@
+version: '3'
+services:
+    board-db:
+        image: mariadb:10.4
+        container_name: board-db
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: test123@
+            MYSQL_DATABASE: wanted_db
+            MYSQL_USER: wantedlab
+            MYSQL_PASSWORD: test123@
+            TZ: Asia/Seoul
+        volumes:
+            - ./database_schema/initdb.d:/docker-entrypoint-initdb.d
+        ports:
+            - "3306:3306"
+        command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    board-server:
+        build:
+            context: .
+            dockerfile: dockerfile
+        ports: 
+            - "8000:8000"
+        depends_on:
+            - board-db
