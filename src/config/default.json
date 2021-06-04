@@ -3,7 +3,7 @@
         "port": 8000
     },
     "db": {
-        "host": "localhost",
+        "host": "board-db",
         "port": 3306,
         "user": "wantedlab",
         "password": "test123@",
