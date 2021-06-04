@@ -3,10 +3,31 @@
 댓글이 있는 익명 게시판을 구현한 프로젝트입니다. \
 게시판 프로젝트는 RESTful API 환경을 지원하며, 크게 게시글 API와 댓글 API로 구성되어 있습니다.\
 프로젝트를 열람해 주셔서 감사합니다.
-## Install
-    npm install
 
 ## Run
+### Docker compose 환경
+    docker-compose up -d
+
+### Database docker container 기반 실행
+
+#### 1. run database container
+    docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=test123@  -e MYSQL_DATABASE=wanted_db -e MYSQL_USER=wantedlab -e MYSQL_PASSWORD=test123@ --name wantedlab-db mariadb:10.4 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#### 2. src/config/default.json 수정
+    {
+        "api": {
+            "port": 8000
+        },
+        "db": {
+            "host": "board-db", -> "localhost"
+            "port": 3306,
+            "user": "wantedlab",
+            "password": "test123@",
+            "database": "wanted_db",
+            "connectionLimit": 30
+        }
+    }
+#### 3. Install
+    npm install
     node app.js
 
 ## Dev environments
