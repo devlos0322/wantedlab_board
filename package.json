@@ -4,6 +4,7 @@
   "description": "원티드랩 기술과제",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
